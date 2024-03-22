@@ -29,7 +29,7 @@ public class PersonService {
 
         logger.info("Person created ");
 
-        return person;
+        return personRepository.save(person);
     }
 
 
