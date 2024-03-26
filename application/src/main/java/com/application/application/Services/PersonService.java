@@ -1,39 +1,46 @@
 package com.application.application.Services;
 
+import com.application.application.Mapper.DozerMapper;
 import com.application.application.Person.Person;
 import com.application.application.Repositories.interfaces.IPersonRepository;
+import com.application.application.VO.PersonVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 @Service
 public class PersonService {
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
+
     @Autowired
     public IPersonRepository personRepository;
 
-    public Person findById(Long id) throws Exception{
+    public List<PersonVO> getAll() {
+
+        logger.info("Get All Persons");
+
+        return DozerMapper.ParseListObject(personRepository.findAll(), PersonVO.class);
+    }
+
+    public PersonVO findById(Long id) throws Exception {
 
         logger.info("Search for a person with id = " + id);
 
-        return personRepository.findById(id).orElseThrow(()
-                -> new Exception("Person not found"));
+        return DozerMapper.ParseObject(personRepository.findById(id).orElseThrow(()
+                -> new Exception("Person not found")), PersonVO.class);
     }
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
 
         logger.info("Person created ");
-
-        return personRepository.save(person);
+        return DozerMapper.ParseObject(personRepository.save(DozerMapper.ParseObject(person, Person.class)), PersonVO.class);
     }
 
 
-    public Person update(Person person) throws Exception{
+    public PersonVO update(PersonVO person) throws Exception {
 
         logger.info("Person updated ");
 
@@ -46,23 +53,16 @@ public class PersonService {
         entity.setLastName(person.getLastName());
 
 
-        return personRepository.save(entity);
+        return DozerMapper.ParseObject(personRepository.save(entity), PersonVO.class);
     }
 
 
-    public void delete(Long id) throws Exception{
+    public void delete(Long id) throws Exception {
 
         logger.info("Person deleted ");
 
         Person entity = personRepository.findById(id).orElseThrow(()
                 -> new Exception("Person not found"));
         personRepository.delete(entity);
-    }
-
-
-    public List<Person> getAll() {
-
-        logger.info("Get All Persons");
-        return personRepository.findAll();
     }
 }
