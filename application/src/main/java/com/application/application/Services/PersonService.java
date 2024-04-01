@@ -1,8 +1,8 @@
 package com.application.application.Services;
 
 import com.application.application.Mapper.DozerMapper;
-import com.application.application.Person.Person;
-import com.application.application.Repositories.interfaces.IPersonRepository;
+import com.application.application.Models.Person.Person;
+import com.application.application.Repositories.IPersonRepository;
 import com.application.application.VO.PersonVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.application.application.mocks;
 
-import com.application.application.Person.Person;
+import com.application.application.Models.Person.Person;
 import com.application.application.VO.PersonVO;
 
 import java.util.ArrayList;

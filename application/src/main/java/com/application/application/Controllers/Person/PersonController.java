@@ -18,10 +18,6 @@ public class PersonController {
     @Autowired
     private PersonService service;
 
-    @Autowired
-    private DozerMapper mapper;
-
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PersonVO>> findAll() {
         return ResponseEntity.ok(service.getAll());
